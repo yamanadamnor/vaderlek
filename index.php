@@ -1,4 +1,7 @@
 <?php
+// require "conn.php";
+
+
 
 $filename = "weather_data.csv";
 
@@ -18,10 +21,10 @@ if (($h = fopen($filename, "r")) !== FALSE)
   // Close the file
   fclose($h);
 }
+// var_dump($weatherDataArr);
 
 // Converts every array object to UTF-8 from UTF-16
 for ($i = 0; $i < count($weatherDataArr); $i++) {
-  // $resu
   $results[$i] = mb_convert_encoding($weatherDataArr[$i], "UTF-8", "UTF-16");
 }
 // var_dump($results);
@@ -29,15 +32,14 @@ for ($i = 0; $i < count($weatherDataArr); $i++) {
 // Shifting the first element of the array and saving it to $header 
 $header[] = array_shift($results);
 
-
 // Explodes $header
-$explodedHeader = explodeArray("\t", $header[0][0]);
+$explodedHeader = explode("\t", $header[0][0]);
 
 // Explodes $results
 for ($i=0; $i < count($results); $i++) { 
   $str = $results[$i][$i-$i];
   $stripped[] = str_replace(" ", "", $str);
-  $exploded[] = explodeArray("\t", $stripped[$i]);
+  $exploded[] = explode("\t", $stripped[$i]);
   // var_dump($stripped);
 }
 
@@ -48,18 +50,15 @@ for ($i=0; $i < count($explodedHeader) ; $i++) {
 }
 
 
-function explodeArray($exploder, $array) {
-  $result = explode("$exploder", $array);
-  return $result;
-}
-
-
 // Var_dump variables
 echo "Trimmed";
 // var_dump($stripped);
 
 echo "Exploded header";
-// var_dump($explodedHeader);
+var_dump($explodedHeader);
+
+echo "newArr";
+// var_dump($newArr);
 
 echo "Exploded";
 var_dump($exploded);
