@@ -13,7 +13,7 @@ $weatherDataArr = [];
 if (($h = fopen($filename, "r")) !== FALSE) 
 {
   // Convert each line into the local $data variable
-  while (($data = fgetcsv($h, 1000, ",")) !== FALSE) 
+  while (($data = fgetcsv($h, 1000, "\t")) !== FALSE) 
   {		
       $weatherDataArr[] = $data;
   }
@@ -35,36 +35,41 @@ $header[] = array_shift($results);
 // Explodes $header
 $explodedHeader = explode("\t", $header[0][0]);
 
-// Explodes $results
-for ($i=0; $i < count($results); $i++) { 
-  $str = $results[$i][$i-$i];
-  $stripped[] = str_replace(" ", "", $str);
-  $exploded[] = explode("\t", $stripped[$i]);
-  // var_dump($stripped);
+foreach ($results as $key => $values) {
+  foreach ($values as $value) {
+    $trimmed [$key][] = trim($value);
+  }
 }
 
-for ($i=0; $i < count($explodedHeader) ; $i++) { 
-  # code...
-  $newArr[$explodedHeader[$i]] = [];
-  // var_dump($explodedHeader[$i]);
+function stringToFloat($value) {
+  if(is_numeric($value)) {
+    $floatval = floatval($value);
+    return $floatval;
+  } else {
+    return $value;
+  }
 }
+
+foreach ($trimmed as $key => $values) {
+  foreach ($values as $value) {
+    $converted[$key][] = stringToFloat($value);
+  }
+}
+
 
 
 // Var_dump variables
-echo "Trimmed";
-// var_dump($stripped);
+// echo "Trimmed";
+// var_dump($trimmed);
 
-echo "Exploded header";
-var_dump($explodedHeader);
+echo "Converted";
+var_dump($converted);
 
-echo "newArr";
-// var_dump($newArr);
+// echo "Exploded header";
+// var_dump($explodedHeader);
 
-echo "Exploded";
-var_dump($exploded);
-
-echo "Original str";
+// echo "Original str";
 // var_dump($str);
 
-echo "Results";
+// echo "Results";
 // var_dump($results);
