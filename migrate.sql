@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS `weather_data`;
 CREATE TABLE `weather_data` (
   `id`                   INT(11) NOT NULL AUTO_INCREMENT,
   `time`                 TIMESTAMP,
-  `intervall`            INT(11), 
+  `interval`            INT(11), 
   `temp_indoors`         DECIMAL(11,2),
   `humidity_indoors`     INT(11),
   `temp_outdoor`         INT(11),
@@ -15,7 +15,7 @@ CREATE TABLE `weather_data` (
   `wind_gust`            DECIMAL(11,2),
   `wind_direction`       VARCHAR(255),
   `dew_point`            DECIMAL(11,2),
-  `vindavkylning`        DECIMAL(11,2),
+  `wind_cooldown`        DECIMAL(11,2),
   `rain_amount_hour`     DECIMAL(11,2),
   `rain_amount_day`      DECIMAL(11,2),
   `rain_amount_week`     DECIMAL(11,2),
