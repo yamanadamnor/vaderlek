@@ -1,6 +1,9 @@
 # vaderlek
 API for weather data
 
+
+## Database
+### weather_data
 | Field             | Type          | Null | Key | Default             | Extra                         |
 |-------------------|---------------|------|-----|---------------------|-------------------------------|
 | id                | int(11)       | NO   | PRI | NULL                | auto_increment                |
