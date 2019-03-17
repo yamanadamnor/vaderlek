@@ -4,10 +4,10 @@ DROP TABLE IF EXISTS `weather_data`;
 CREATE TABLE `weather_data` (
   `id`                   INT(11) NOT NULL AUTO_INCREMENT,
   `time`                 TIMESTAMP,
-  `interval`            INT(11), 
+  `interval`             INT(11), 
   `temp_indoors`         DECIMAL(11,2),
   `humidity_indoors`     INT(11),
-  `temp_outdoor`         INT(11),
+  `temp_outdoors`        DECIMAL(11,2),
   `humidity_outdoors`    INT(11),
   `relative_humidity`    DECIMAL(11,2),
   `absolute_humidity`    DECIMAL(11,2),
