@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `weather_data`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `weather_data` (
   `id`                   INT(11) NOT NULL AUTO_INCREMENT,
-  `time`                 TIMESTAMP,
+  `time`                 TIMESTAMP NULL,
   `interval`             INT(11), 
   `temp_indoors`         DECIMAL(11,2),
   `humidity_indoors`     INT(11),
