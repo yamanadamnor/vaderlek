@@ -36,19 +36,6 @@ foreach ($results as $key => $values) {
     }
 }
 
-function stringToFloat($value)
-{
-    if (is_numeric($value)) {
-        $floatval = floatval($value);
-        return $floatval;
-    } else if (is_string($value)) {
-        return $value;
-    } else {
-        $value = "inte ett värde";
-        return $value;
-    }
-}
-
 foreach ($trimmed as $key => $values) {
     foreach ($values as $value) {
         $converted[$key][] = stringToFloat($value);
@@ -84,17 +71,32 @@ foreach ($converted as $key => $value) {
         ],
         false
     );
-    // var_dump($converted[$key][1]);
 }
+
+
+// Function to convert string to float if is_numeric == true
+function stringToFloat($value) {
+    if (is_numeric($value)) {
+        $floatval = floatval($value);
+        return $floatval;
+    } else if (is_string($value)) {
+        return $value;
+    } else {
+        $value = null;
+        var_dump($value);
+        return $value;
+    }
+}
+
+
+// var_dump($converted[561]);
+// var_dump(is_string($converted[561][9]));
 
 // Var_dump variables
 // echo "Query";
 // var_dump($query);
 
 // echo "Converted";
-// foreach ($converted as $key => $value) {
-//     var_dump($value);
-// }
 // var_dump($converted);
 
 // echo "Exploded header";
