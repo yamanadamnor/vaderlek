@@ -21,9 +21,9 @@ $settings = array(
 // Skapa anslutningen och fånga ev. fel
 try {
     $dbm = new PDO($dsn, $user, $pass, $settings);
-    echo "Användaren " . "<b>$user</b>" . " är kopplad till " . "<b>$db</b>";
+    echo "Användaren " . "<b>$user</b>" . " är kopplad till " . "<b>$db</b>" . "<br/>";
 } catch (PDOException $e) {
-    echo 'Kunde inte koppla mot db.<br>'.$e->getMessage();
+    echo 'Kunde inte koppla mot db.<br/>'.$e->getMessage();
     exit;
 }
 
@@ -72,7 +72,8 @@ function runQuery($query, $queryParams, $fetchBool = false) {
         echo 'SESSION';
         var_dump($_SESSION);
         echo '<br><br>';
+        return;
         
-        exit;
+        // exit;
     }
 }
