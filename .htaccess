@@ -1,0 +1,18 @@
+# Options -MultiViews
+
+# Start omskrivsningsmotorn
+RewriteEngine On
+
+# Låter dig visa mappar/filer utan att omskrivningen tar över
+# Krävs för att kunna se css-filer etc
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Ta url:en och skicka till index
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+# ^ för att markera början
+# ( ) för att spara som $1
+# . för alla tecken
+# + för att forsätta
+# $ för att markera slut
+# skicka in urlen som get-variabel till index.php
