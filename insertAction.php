@@ -1,49 +1,41 @@
 <?php
 require "conn.php";
+require "CsvParser.php";
+function insertData($dataArr)
+{
+    // Adding data to database
+    foreach ($dataArr as $key => $value) {
+        $query = "INSERT INTO weather_data VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        runQuery(
+            $query,
+            [
+                null,
+                $dataArr[$key][1],
+                $dataArr[$key][2],
+                $dataArr[$key][3],
+                $dataArr[$key][4],
+                $dataArr[$key][5],
+                $dataArr[$key][6],
+                $dataArr[$key][7],
+                $dataArr[$key][8],
+                $dataArr[$key][9],
+                $dataArr[$key][10],
+                $dataArr[$key][11],
+                $dataArr[$key][12],
+                $dataArr[$key][13],
+                $dataArr[$key][14],
+                $dataArr[$key][15],
+                $dataArr[$key][16],
+                $dataArr[$key][17],
+                $dataArr[$key][18],
+            ],
+            false
+        );
+    }
 
-function insertData() {
-  global $dbm;
-    $query = "INSERT INTO weather_data(
-      'intervall',
-      'temp_indoors',
-      'humidity_indoors',
-      'temp_outdoors',
-      'relative_humidity',
-      'absolute_humidity',
-      'wind_velocity',
-      'wind_gust',
-      'wind_direction',
-      'dew_point',
-      'vindavskylning',
-      'rain_amout_hour',
-      'rain_amount_day',
-      'rain_amount_week',
-      'rain_amount_month',
-      'rain_amounr_total'
-    )
-  values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)";
-    runQuery(
-        $query,
-        [
-            $converted[$key][1],
-            $converted[$key][2],
-            $converted[$key][3],
-            $converted[$key][4],
-            $converted[$key][5],
-            $converted[$key][6],
-            $converted[$key][7],
-            $converted[$key][8],
-            $converted[$key][9],
-            $converted[$key][10],
-            $converted[$key][11],
-            $converted[$key][12],
-            $converted[$key][13],
-            $converted[$key][14],
-            $converted[$key][15],
-            $converted[$key][16],
-            $converted[$key][17],
-            $converted[$key][18],
-        ],
-    );
 }
 
+$entry = new CsvParser(["weather_data.csv", "weather_data_2.csv"]);
+$results = $entry->getResults();;
+insertData($results);
+header('Location:index.php');

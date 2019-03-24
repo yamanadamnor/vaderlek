@@ -12,7 +12,7 @@ class CsvParser
         $filenames
     ) {
         $this->filenames = $filenames;
-    }
+     }
 
     public function decodeAll()
     {
@@ -65,17 +65,18 @@ class CsvParser
         }
     }
 
+    public function parseAll() {
+        $this->decodeAll();
+        $this->convertAll();
+        $this->trimAll();
+        $this->convertAllValues();
+    }
+
     public function getResults()
     {
+        $this->parseAll();
         return $this->results;
     }
 
 }
 
-$object = new CsvParser(["weather_data.csv", "weather_data_2.csv"]);
-$object->decodeAll();
-$object->convertAll();
-$object->trimAll();
-$object->convertAllValues();
-$test = $object->getResults();
-var_dump($test);

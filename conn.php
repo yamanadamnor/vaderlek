@@ -70,7 +70,7 @@ function runQuery($query, $queryParams, $fetchBool = false) {
         echo '<br><br>';
 
         echo 'SESSION';
-        var_dump($_SESSION);
+        // var_dump($_SESSION);
         echo '<br><br>';
         return;
         
