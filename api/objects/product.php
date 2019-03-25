@@ -26,6 +26,13 @@ class Product
     public $rain_amount_month;
     public $rain_amount_total;
 
+    // API specific properties
+    // average
+    public $average;
+    public $field;
+    public $offset;
+    public $length;
+
     // constructor with $db as database connection
     public function __construct($db)
     {
@@ -49,7 +56,6 @@ class Product
 
     public function readOne()
     {
-
         // query to read single record
         $query = "SELECT * FROM $this->table_name WHERE id = ?";
 
@@ -86,11 +92,27 @@ class Product
         $this->rain_amount_total = $row["rain_amount_total"];
     }
 
+    public function getAverage()
+    {
+        $query = "SELECT AVG($this->field) FROM $this->table_name WHERE id>=$this->offset AND id<=$this->offset + $this->length";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->average = $row["AVG($this->field)"];
+    }
+
     public function create()
     {
         // query to insert record
         $query = "INSERT INTO $this->table_name" .
-            "SET 
+            "SET
                 time=:time,
                 interval=:interval,
                 temp_indoors=:temp_indoors,
@@ -159,4 +181,81 @@ class Product
         }
         return false;
     }
+
+    public function insertData($dataArr)
+    {
+        // Adding data to database
+        foreach ($dataArr as $key => $value) {
+            $query = "INSERT INTO weather_data VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            $stmt = $this->conn->prepare($query);
+
+            if (
+                isset($dataArr[$key][1]) &&
+                isset($dataArr[$key][2]) &&
+                isset($dataArr[$key][3]) &&
+                isset($dataArr[$key][4]) &&
+                isset($dataArr[$key][5]) &&
+                isset($dataArr[$key][6]) &&
+                isset($dataArr[$key][7]) &&
+                isset($dataArr[$key][8]) &&
+                isset($dataArr[$key][9]) &&
+                isset($dataArr[$key][10]) &&
+                isset($dataArr[$key][11]) &&
+                isset($dataArr[$key][12]) &&
+                isset($dataArr[$key][13]) &&
+                isset($dataArr[$key][14]) &&
+                isset($dataArr[$key][15]) &&
+                isset($dataArr[$key][16]) &&
+                isset($dataArr[$key][17]) &&
+                isset($dataArr[$key][18])
+            ) {
+                # code...
+                $this->id = null;
+                $this->time = $dataArr[$key][1];
+                $this->interval = $dataArr[$key][2];
+                $this->temp_indoors = $dataArr[$key][3];
+                $this->humidity_indoors = $dataArr[$key][4];
+                $this->temp_outdoors = $dataArr[$key][5];
+                $this->humidity_outdoors = $dataArr[$key][6];
+                $this->relative_humidity = $dataArr[$key][7];
+                $this->absolute_humidity = $dataArr[$key][8];
+                $this->wind_velocity = $dataArr[$key][9];
+                $this->wind_gust = $dataArr[$key][10];
+                $this->wind_direction = $dataArr[$key][11];
+                $this->dew_point = $dataArr[$key][12];
+                $this->wind_cooldown = $dataArr[$key][13];
+                $this->rain_amount_hour = $dataArr[$key][14];
+                $this->rain_amount_day = $dataArr[$key][15];
+                $this->rain_amount_week = $dataArr[$key][16];
+                $this->rain_amount_month = $dataArr[$key][17];
+                $this->rain_amount_total = $dataArr[$key][18];
+            }
+
+            $stmt->bindParam(1, $this->id);
+            $stmt->bindParam(2, $this->time);
+            $stmt->bindParam(3, $this->interval);
+            $stmt->bindParam(4, $this->temp_indoors);
+            $stmt->bindParam(5, $this->humidity_indoors);
+            $stmt->bindParam(6, $this->temp_outdoors);
+            $stmt->bindParam(7, $this->humidity_outdoors);
+            $stmt->bindParam(8, $this->relative_humidity);
+            $stmt->bindParam(9, $this->absolute_humidity);
+            $stmt->bindParam(10, $this->wind_velocity);
+            $stmt->bindParam(11, $this->wind_gust);
+            $stmt->bindParam(12, $this->wind_direction);
+            $stmt->bindParam(13, $this->dew_point);
+            $stmt->bindParam(14, $this->wind_cooldown);
+            $stmt->bindParam(15, $this->rain_amount_hour);
+            $stmt->bindParam(16, $this->rain_amount_day);
+            $stmt->bindParam(17, $this->rain_amount_week);
+            $stmt->bindParam(18, $this->rain_amount_month);
+            $stmt->bindParam(19, $this->rain_amount_total);
+
+            $stmt->execute();
+
+        }
+
+    }
+
 }

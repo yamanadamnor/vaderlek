@@ -7,6 +7,6 @@
   <title>Document</title>
 </head>
 <body>
-  <button><a href="insertAction.php">Load Data</a></button>
+  <button><a href="insertData">Insert Data</a></button>
 </body>
 </html>

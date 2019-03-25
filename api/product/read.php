@@ -4,10 +4,14 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // database connection
-include_once "../config/database.php";
-include_once "../objects/product.php";
+// include_once "../config/database.php";
+// include_once "../objects/product.php";
+
+include_once "api/config/database.php";
+include_once "api/objects/product.php";
 
 // Instantiate database and product object
+
 $database = new Database();
 $db = $database->getConnection();
 
