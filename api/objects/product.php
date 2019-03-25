@@ -27,8 +27,9 @@ class Product
     public $rain_amount_total;
 
     // API specific properties
-    // average
     public $average;
+    public $min;
+    public $max;
     public $field;
     public $offset;
     public $length;
@@ -94,7 +95,7 @@ class Product
 
     public function getAverage()
     {
-        $query = "SELECT AVG($this->field) FROM $this->table_name WHERE id>=$this->offset AND id<=$this->offset + $this->length";
+        $query = "SELECT AVG($this->field) as $this->field FROM $this->table_name WHERE id>=$this->offset AND id<=$this->offset + $this->length";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -105,8 +106,41 @@ class Product
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->average = $row["AVG($this->field)"];
+        $this->average = $row["$this->field"];
     }
+
+    public function getMax()
+    {
+        $query = "SELECT MAX($this->field) as $this->field FROM $this->table_name WHERE id>=$this->offset AND id<=$this->offset + $this->length";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->max = $row["$this->field"];
+    }
+
+    public function getMin()
+    {
+        $query = "SELECT MIN($this->field) as $this->field FROM $this->table_name WHERE id>=$this->offset AND id<=$this->offset + $this->length";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->min = $row["$this->field"];
+    }
+
 
     public function create()
     {
