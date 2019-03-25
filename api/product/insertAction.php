@@ -2,7 +2,7 @@
 // require "conn.php";
 require "api/objects/CsvParser.php";
 
-$entry = new CsvParser(["weather_data.csv", "weather_data_2.csv"]);
+$entry = new CsvParser(["weather_data_2.csv"]);
 $results = $entry->getResults();;
 
 include_once "api/config/database.php";
